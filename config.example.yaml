@@ -1,0 +1,32 @@
+app:
+  name: go_boilerplate
+  debug: true
+
+server:
+  address: 9090
+
+context:
+  timeout: 5
+
+mariadb:
+  host: localhost
+  port: 3306
+  user: root
+  pass: boilerplate_db_password
+  name: boilerplate_db
+
+mongodb:
+  host: localhost
+  port: 27017
+  user:
+  pass:
+  name: boilerplate_db
+
+# https://www.grc.com/passwords.htm for get secret
+jwt:
+  secret: uxiAF6V7E5gzyOAIfFGnxhBQyw42HZtcfqSFZ4CFdUKJ2xFyFqAh72JYiv95eiF
+  lifetime: 10
+
+admin:
+  username: irham
+  password: 12345678

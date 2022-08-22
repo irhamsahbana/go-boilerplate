@@ -1,0 +1,26 @@
+[
+  {
+    "_id": "de1b9618-6398-451f-930e-95a9a29ad58f",
+    "colName": "boilerplate",
+    "created": "2022-08-22T07:51:43.794Z",
+    "sortNum": 10000,
+    "folders": [
+      {
+        "_id": "d2ad7f45-dbce-41ee-bf71-4b5bb43e47c3",
+        "name": "user",
+        "containerId": "",
+        "created": "2022-08-22T08:18:47.704Z",
+        "sortNum": 10000
+      }
+    ],
+    "settings": {
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "tests": []
+    }
+  }
+]

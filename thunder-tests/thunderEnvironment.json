@@ -1,0 +1,25 @@
+[
+  {
+    "_id": "10c9f76d-4d05-4773-8c05-b610bd64b2e7",
+    "name": "(Global Env)",
+    "default": false,
+    "global": true,
+    "sortNum": -1,
+    "created": "2022-08-22T07:48:54.147Z",
+    "modified": "2022-08-22T07:49:59.680Z",
+    "data": [
+      {
+        "name": "protocol",
+        "value": "http"
+      },
+      {
+        "name": "domain",
+        "value": "localhost:9099"
+      },
+      {
+        "name": "base_url",
+        "value": "{{protocol}}://{{domain}}"
+      }
+    ]
+  }
+]
