@@ -1,15 +1,18 @@
 package domain
 
-import "context"
+import (
+	"context"
+)
 
 type User struct {
 	UUID			string		`bson:"uuid"`
-	FirstName		string		`bson:"first_name"`
-	LastName		string		`bson:"last_name"`
-	Password		string		`bson:"password"`
+	Name			string		`bson:"name"`
+	Role			string		`bson:"role"`
 	Email			string		`bson:"email"`
+	Password		string		`bson:"password"`
 	Phone			*string		`bson:"phone,omitempty"`
-	Type			string		`bson:"type"`
+	WA				*string		`bson:"wa,omitempty"`
+	ProfileUrl		*string		`bson:"profile_url,omitempty"`
 	Token			*string		`bson:"token,omitempty"`
 	RefreshToken	*string		`bson:"refresh_token,omitempty"`
 	CreatedAt		int64	 	`bson:"created_at"`
@@ -23,5 +26,5 @@ type UserUsecaseContract interface {
 }
 
 type UserRepositoryContract interface {
-
+	FindUserBy(ctx context.Context, key string, val interface{}, withTrashed bool) (*User, int, error)
 }

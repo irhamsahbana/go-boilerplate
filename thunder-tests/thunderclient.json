@@ -8,9 +8,14 @@
     "method": "POST",
     "sortNum": 10000,
     "created": "2022-08-22T07:51:58.455Z",
-    "modified": "2022-08-22T08:18:50.027Z",
+    "modified": "2022-08-23T09:00:20.287Z",
     "headers": [],
     "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n \"email\": \"lucy@lucy\",\n \"password\": \"password\"\n}",
+      "form": []
+    },
     "tests": []
   },
   {

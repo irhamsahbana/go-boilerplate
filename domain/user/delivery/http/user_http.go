@@ -38,14 +38,28 @@ func (h *UserHandler) Register(c *gin.Context) {
 	ctx := context.Background()
 	result, httpCode, err := h.UserUsecase.RegisterUser(ctx, &request)
 	if err != nil {
-		http_response.ReturnResponse(c, httpCode, err.Error(), nil)
+		http_response.ReturnResponse(c, httpCode, err.Error(), err.Error())
 	}
 
 	http_response.ReturnResponse(c, httpCode, "Registred", result)
 }
 
 func (h *UserHandler) Login(c *gin.Context) {
-	http_response.ReturnResponse(c, http.StatusOK, "Logged", nil)
+	var request domain.UserLoginRequest
+
+	if err := c.BindJSON(&request); err != nil {
+		http_response.ReturnResponse(c, http.StatusUnprocessableEntity, err.Error(), nil)
+		return
+	}
+
+	ctx := context.Background()
+	result, httpCode, err := h.UserUsecase.LoginUser(ctx, &request)
+	if err != nil {
+		http_response.ReturnResponse(c, httpCode, err.Error(), nil)
+		return
+	}
+
+	http_response.ReturnResponse(c, httpCode, "Authenticated", result)
 }
 
 func (h *UserHandler) Profile(c *gin.Context) {
