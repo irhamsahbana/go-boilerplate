@@ -33,7 +33,7 @@ func InitMongoDatabase() *mongo.Client {
 
 	var client *mongo.Client
 	var err error
-	var debugMode bool = App.Config.GetBool("app.debug")
+	var debugMode bool = App.Config.GetBool("mongodb.monitor_query")
 
 	if debugMode {
 		cmdMonitor := &event.CommandMonitor{

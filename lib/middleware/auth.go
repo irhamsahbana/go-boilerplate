@@ -1,17 +1,36 @@
 package middleware
 
 import (
+	"fmt"
+	"go-boilerplate/lib/http_response"
+	jwthandler "go-boilerplate/lib/jwt_handler"
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 )
 
 func Auth(c *gin.Context) {
-	// clientToken := c.Request.Header.Get("token")
+	const BEARER_SCHEMA = "Bearer "
 
-	// if clientToken == "" {
-	// 	http_response.ReturnResponse(c, http.StatusUnauthorized, "Unauthorized", nil)
-	// 	c.Abort()
-	// 	return
-	// }
+	authHeader := c.GetHeader("Authorization")
 
-	// tokenString := strings.Replace(authorizationHeader, "Bearer ", "", -1)
+	if authHeader == "" {
+		http_response.ReturnResponse(c, http.StatusUnauthorized, http.StatusText(401), nil)
+		c.Abort()
+		return
+	}
+	tokenString := authHeader[len(BEARER_SCHEMA):]
+
+	fmt.Println(tokenString)
+
+	claims, err := jwthandler.ValidateToken(tokenString)
+	if err != nil {
+		http_response.ReturnResponse(c, http.StatusUnauthorized, err.Error(), nil)
+		c.Abort()
+		return
+	}
+
+	fmt.Println(claims)
+
+	c.Next()
 }

@@ -36,8 +36,14 @@ func GenerateAllTokens(uuid string, name string,  role string) (string, string, 
 	}
 	// create refresh token
 	refreshClaims := &MyCustomClaims{
+		UUID: uuid,
+		Name: name,
+		Role: role,
 		RegisteredClaims: jwt.RegisteredClaims{
-			ExpiresAt: jwt.NewNumericDate(time.Now().UTC().Add(24 * time.Hour)),
+			Issuer:    "Authenticator",
+			IssuedAt:  jwt.NewNumericDate(time.Now().UTC()),
+			ExpiresAt: jwt.NewNumericDate(time.Now().UTC().AddDate(1, 0, 0)),
+			NotBefore: jwt.NewNumericDate(time.Now().UTC()),
 		},
 	}
 
@@ -72,9 +78,9 @@ func ValidateToken(signedToken string) (*MyCustomClaims, error) {
 		return nil, errors.New("Token is invalid")
 	}
 
-	if claims.ExpiresAt.UTC().Unix() < time.Now().UTC().Unix(){
-		return nil, errors.New("Token is expired")
-	}
+	// if claims.ExpiresAt.UTC().Unix() < time.Now().UTC().Unix(){
+	// 	return nil, errors.New("Token is expired")
+	// }
 
 	return claims, nil
 }

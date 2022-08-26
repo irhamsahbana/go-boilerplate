@@ -1,5 +1,6 @@
 app:
   name: go_boilerplate
+  domain: localhost
   debug: true
 
 server:
@@ -21,6 +22,7 @@ mongodb:
   user:
   pass:
   name: boilerplate_db
+  monitor_query: false
 
 # https://www.grc.com/passwords.htm for get secret
 jwt:

@@ -8,8 +8,14 @@
     "method": "POST",
     "sortNum": 10000,
     "created": "2022-08-22T07:51:58.455Z",
-    "modified": "2022-08-23T09:00:20.287Z",
-    "headers": [],
+    "modified": "2022-08-26T03:36:37.035Z",
+    "headers": [
+      {
+        "name": "Authorization",
+        "value": "Bearer somethingnlaada dada",
+        "isDisabled": true
+      }
+    ],
     "params": [],
     "body": {
       "type": "json",
@@ -28,6 +34,43 @@
     "sortNum": 20000,
     "created": "2022-08-22T07:52:59.241Z",
     "modified": "2022-08-22T08:18:51.182Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "71087164-0a29-48f3-803d-6d66228bc082",
+    "colId": "de1b9618-6398-451f-930e-95a9a29ad58f",
+    "containerId": "d2ad7f45-dbce-41ee-bf71-4b5bb43e47c3",
+    "name": "profile",
+    "url": "{{base_url}}/users/profile",
+    "method": "GET",
+    "sortNum": 30000,
+    "created": "2022-08-26T03:35:13.111Z",
+    "modified": "2022-08-26T07:35:10.958Z",
+    "headers": [
+      {
+        "name": "Authorization",
+        "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiODQwMTdiZTQtOTA4Mi00MzIzLTg1MTMtYTQ0NTA3ODVmNjIyIiwibmFtZSI6Imx1Y3kiLCJyb2xlIjoib3duZXIiLCJpc3MiOiJBdXRoZW50aWNhdG9yIiwiZXhwIjoxNjYxNDg2NzkyLCJuYmYiOjE2NjE0ODYxOTIsImlhdCI6MTY2MTQ4NjE5Mn0.rlI1oh26h_2NVgYdqDJqrRhHEEu8K8L4rHaBryk8cCE"
+      }
+    ],
+    "params": [],
+    "auth": {
+      "type": "bearer",
+      "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiODQwMTdiZTQtOTA4Mi00MzIzLTg1MTMtYTQ0NTA3ODVmNjIyIiwibmFtZSI6Imx1Y3kiLCJyb2xlIjoib3duZXIiLCJpc3MiOiJBdXRoZW50aWNhdG9yIiwiZXhwIjoxNjYxNDg2NzkyLCJuYmYiOjE2NjE0ODYxOTIsImlhdCI6MTY2MTQ4NjE5Mn0.rlI1oh26h_2NVgYdqDJqrRhHEEu8K8L4rHaBryk8cCE"
+    },
+    "tests": []
+  },
+  {
+    "_id": "3b98a9d8-c711-403b-8ae6-631e89eda617",
+    "colId": "de1b9618-6398-451f-930e-95a9a29ad58f",
+    "containerId": "d2ad7f45-dbce-41ee-bf71-4b5bb43e47c3",
+    "name": "refresh token",
+    "url": "{{base_url}}/users/refresh-token",
+    "method": "GET",
+    "sortNum": 40000,
+    "created": "2022-08-26T07:45:36.961Z",
+    "modified": "2022-08-26T08:27:56.576Z",
     "headers": [],
     "params": [],
     "tests": []
