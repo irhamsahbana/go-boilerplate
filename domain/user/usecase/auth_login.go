@@ -9,11 +9,11 @@ import (
 	"net/http"
 )
 
-func (u *userUsecase) LoginUser(c context.Context, req *domain.UserLoginRequest) (*domain.UserResponse, int, error) {
+func (u *userUsecase) Login(c context.Context, req *domain.UserLoginRequest) (*domain.UserResponse, int, error) {
 	ctx, cancel := context.WithTimeout(c, u.contextTimeout)
 	defer cancel()
 
-	result, code, err := u.userRepo.FindUserBy(ctx, "email", req.Email, false)
+	user, code, err := u.userRepo.FindUserBy(ctx, "email", req.Email, false)
 	if err != nil {
 		return nil, code, err
 	}
@@ -22,29 +22,26 @@ func (u *userUsecase) LoginUser(c context.Context, req *domain.UserLoginRequest)
 		return nil, http.StatusUnauthorized, errors.New("Unauthorized")
 	}
 
-	if ok := passwordhandler.VerifyPassword(result.Password, req.Password); !ok {
+	if ok := passwordhandler.VerifyPassword(user.Password, req.Password); !ok {
 		return nil, http.StatusUnauthorized, errors.New("Unauthorized")
 	}
 
-	token, refreshtoken, err := jwthandler.GenerateAllTokens(result.UUID, result.Name, result.Role)
+	accesstoken, refreshtoken, err := jwthandler.GenerateAllTokens(user.UUID)
 	if err != nil {
 		return nil, http.StatusInternalServerError, err
 	}
 
-	result.Token = &token
-	result.RefreshToken = &refreshtoken
-
-	result, code, err  = u.userRepo.UpdateUser(ctx, result)
+	aToken, rToken, code, err  := u.userRepo.GenerateTokens(ctx, user.UUID, accesstoken, refreshtoken)
 	if err != nil {
 		return nil, code, err
 	}
 
 	var resp domain.UserResponse
-	resp.UUID = result.UUID
-	resp.Name = result.Name
-	resp.Role = result.Role
-	resp.Token = &token
-	resp.RefreshToken = &refreshtoken
+	resp.UUID = user.UUID
+	resp.Name = user.Name
+	resp.Role = user.Role
+	resp.Token = &aToken
+	resp.RefreshToken = &rToken
 
 	return &resp, http.StatusOK, nil
 }

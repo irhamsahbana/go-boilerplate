@@ -1,16 +1,1 @@
-[
-  {
-    "_id": "5276aaef-c957-4a51-a57f-9a4944290a0d",
-    "colId": "history",
-    "containerId": "",
-    "name": "{{base_url}}/users/login",
-    "url": "{{base_url}}/users/login",
-    "method": "GET",
-    "sortNum": 0,
-    "created": "2022-08-22T07:50:54.763Z",
-    "modified": "2022-08-22T07:51:16.647Z",
-    "headers": [],
-    "params": [],
-    "tests": []
-  }
-]
+[]

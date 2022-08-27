@@ -9,23 +9,19 @@ import (
 )
 
 type MyCustomClaims struct {
-	UUID				string		`json:"uuid"`
-	Name				string		`json:"name"`
-	Role				string		`json:"role"`
+	UserUUID			string		`json:"user_uuid"`
 	jwt.RegisteredClaims
 }
 
 var mySigningKey = []byte(bootstrap.App.Config.GetString("jwt.secret"))
 var lifetime = bootstrap.App.Config.GetInt("jwt.lifetime")
 
-func GenerateAllTokens(uuid string, name string,  role string) (string, string, error){
+func GenerateAllTokens(userId string) (string, string, error){
 	tokenLifetime := time.Duration(lifetime)
 
 	// Create the claims
 	claims := &MyCustomClaims{
-		UUID: uuid,
-		Name: name,
-		Role: role,
+		UserUUID: userId,
 		RegisteredClaims: jwt.RegisteredClaims{
 			// A usual scenario is to set the expiration time relative to the current time
 			Issuer:    "Authenticator",
@@ -34,11 +30,10 @@ func GenerateAllTokens(uuid string, name string,  role string) (string, string, 
 			NotBefore: jwt.NewNumericDate(time.Now().UTC()),
 		},
 	}
+
 	// create refresh token
 	refreshClaims := &MyCustomClaims{
-		UUID: uuid,
-		Name: name,
-		Role: role,
+		UserUUID: userId,
 		RegisteredClaims: jwt.RegisteredClaims{
 			Issuer:    "Authenticator",
 			IssuedAt:  jwt.NewNumericDate(time.Now().UTC()),
@@ -73,14 +68,10 @@ func ValidateToken(signedToken string) (*MyCustomClaims, error) {
 		return nil, err
 	}
 
-	claims, ok:= token.Claims.(*MyCustomClaims)
+	claims, ok := token.Claims.(*MyCustomClaims)
 	if !ok {
 		return nil, errors.New("Token is invalid")
 	}
-
-	// if claims.ExpiresAt.UTC().Unix() < time.Now().UTC().Unix(){
-	// 	return nil, errors.New("Token is expired")
-	// }
 
 	return claims, nil
 }

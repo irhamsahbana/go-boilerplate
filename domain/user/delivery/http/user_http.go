@@ -8,6 +8,8 @@ import (
 	"go-boilerplate/lib/middleware"
 	"net/http"
 
+	"github.com/golang-jwt/jwt/v4"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -20,31 +22,32 @@ func NewUserHandler(router *gin.Engine, usecase domain.UserUsecaseContract) {
 		UserUsecase: usecase,
 	}
 
-	router.POST("users/login", handler.Login)
-	router.POST("users/register", handler.Register)
-	router.GET("users/refresh-token", handler.RefreshToken)
+	authorized := router.Group("/", middleware.Auth)
+	authorized.GET("/auth/logout", handler.Logout)
+	authorized.GET("/users/profile", handler.Profile)
 
-	router.Use(middleware.Auth)
-	router.GET("users/profile", handler.Profile)
+	router.POST("auth/login", handler.Login)
+	// router.POST("auth/register", handler.Register)
+	router.GET("auth/refresh-token", handler.RefreshToken)
 }
 
-func (h *UserHandler) Register(c *gin.Context) {
-	var request domain.UserRegisterRequest
+// func (h *UserHandler) Register(c *gin.Context) {
+// 	var request domain.UserRegisterRequest
 
-	err := c.BindJSON(&request)
-	if err != nil {
-		http_response.ReturnResponse(c, http.StatusUnprocessableEntity, err.Error(), nil)
-		return
-	}
+// 	err := c.BindJSON(&request)
+// 	if err != nil {
+// 		http_response.ReturnResponse(c, http.StatusUnprocessableEntity, err.Error(), nil)
+// 		return
+// 	}
 
-	ctx := context.Background()
-	result, httpCode, err := h.UserUsecase.RegisterUser(ctx, &request)
-	if err != nil {
-		http_response.ReturnResponse(c, httpCode, err.Error(), err.Error())
-	}
+// 	ctx := context.Background()
+// 	result, httpCode, err := h.UserUsecase.RegisterUser(ctx, &request)
+// 	if err != nil {
+// 		http_response.ReturnResponse(c, httpCode, err.Error(), err.Error())
+// 	}
 
-	http_response.ReturnResponse(c, httpCode, "Registred", result)
-}
+// 	http_response.ReturnResponse(c, httpCode, "Registred", result)
+// }
 
 func (h *UserHandler) Login(c *gin.Context) {
 	var request domain.UserLoginRequest
@@ -55,7 +58,7 @@ func (h *UserHandler) Login(c *gin.Context) {
 	}
 
 	ctx := context.Background()
-	result, httpCode, err := h.UserUsecase.LoginUser(ctx, &request)
+	result, httpCode, err := h.UserUsecase.Login(ctx, &request)
 	if err != nil {
 		http_response.ReturnResponse(c, httpCode, err.Error(), nil)
 		c.Abort()
@@ -70,31 +73,47 @@ func (h *UserHandler) Profile(c *gin.Context) {
 }
 
 func (h *UserHandler) RefreshToken(c *gin.Context)  {
-	cookie, err := c.Request.Cookie("refresh_token")
+	accessToken := c.GetHeader("X-ACCESS-TOKEN")
+	refreshToken := c.GetHeader("X-REFRESH-TOKEN")
+
+	_, err := jwthandler.ValidateToken(accessToken)
 	if err != nil {
-		http_response.ReturnResponse(c, http.StatusUnauthorized, err.Error(), nil)
-		c.Abort()
-		return
+		v, _ := err.(*jwt.ValidationError)
+
+		if v.Errors == jwt.ValidationErrorExpired {
+		} else {
+			http_response.ReturnResponse(c, http.StatusUnauthorized, err.Error(), nil)
+			return
+		}
 	}
 
-	refreshToken := cookie.Value
-
-	claims, err := jwthandler.ValidateToken(refreshToken)
+	claimsRT, err := jwthandler.ValidateToken(refreshToken)
 	if err != nil {
 		http_response.ReturnResponse(c, http.StatusUnauthorized, err.Error(), nil)
-		c.Abort()
 		return
 	}
 
 	ctx := context.Background()
-	result, httpCode, err := h.UserUsecase.RefreshToken(ctx, refreshToken, claims)
+	result, httpCode, err := h.UserUsecase.RefreshToken(ctx, accessToken, refreshToken, claimsRT.UserUUID)
 	if err != nil {
 		http_response.ReturnResponse(c, httpCode, err.Error(), nil)
 		c.Abort()
 		return
 	}
 
-	c.SetCookie("refresh_token", *result.RefreshToken, 3600, "", "", false, true)
-	result.RefreshToken = nil
 	http_response.ReturnResponse(c, httpCode, "Token Refreshed", result)
+}
+
+func (h *UserHandler) Logout(c *gin.Context) {
+	AT := c.GetString("access_token")
+	userId := c.GetString("user_uuid")
+
+	ctx := context.Background()
+	_, httpcode, err := h.UserUsecase.Logout(ctx, AT, userId)
+	if err != nil {
+		http_response.ReturnResponse(c, httpcode, err.Error(), nil)
+		return
+	}
+
+	http_response.ReturnResponse(c, httpcode, "Logout", nil)
 }

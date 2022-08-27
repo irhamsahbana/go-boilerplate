@@ -32,5 +32,7 @@ func Auth(c *gin.Context) {
 
 	fmt.Println(claims)
 
+	c.Set("access_token", tokenString)
+	c.Set("user_uuid", claims.UserUUID)
 	c.Next()
 }

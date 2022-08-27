@@ -20,7 +20,7 @@ type UserResponse struct {
 	Phone			*string			`json:"phone,omitempty"`
 	WA				*string			`json:"wa,omitempty"`
 	ProfileUrl		*string			`json:"profile_url,omitempty"`
-	Token			*string			`json:"token,omitempty"`
+	Token			*string			`json:"access_token,omitempty"`
 	RefreshToken	*string			`json:"refresh_token,omitempty"`
 	CreatedAt		*time.Time	 	`json:"created_at,omitempty"`
 	UpdatedAt		*time.Time		`json:"updated_at,omitempty"`

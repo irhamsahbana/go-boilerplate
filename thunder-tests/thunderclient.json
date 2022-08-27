@@ -2,13 +2,13 @@
   {
     "_id": "e36bcaf7-1f13-4c1f-91c9-c6156ba82261",
     "colId": "de1b9618-6398-451f-930e-95a9a29ad58f",
-    "containerId": "d2ad7f45-dbce-41ee-bf71-4b5bb43e47c3",
+    "containerId": "e7f4b28a-6b44-44ad-b050-c066dd475bb7",
     "name": "login",
-    "url": "{{base_url}}/users/login",
+    "url": "{{base_url}}/auth/login",
     "method": "POST",
     "sortNum": 10000,
     "created": "2022-08-22T07:51:58.455Z",
-    "modified": "2022-08-26T03:36:37.035Z",
+    "modified": "2022-08-27T06:04:08.424Z",
     "headers": [
       {
         "name": "Authorization",
@@ -27,13 +27,13 @@
   {
     "_id": "d75aabad-8a0b-454d-b5c4-8acd72df6859",
     "colId": "de1b9618-6398-451f-930e-95a9a29ad58f",
-    "containerId": "d2ad7f45-dbce-41ee-bf71-4b5bb43e47c3",
+    "containerId": "e7f4b28a-6b44-44ad-b050-c066dd475bb7",
     "name": "register",
     "url": "{{base_url}}/users/register",
     "method": "POST",
-    "sortNum": 20000,
+    "sortNum": 40000,
     "created": "2022-08-22T07:52:59.241Z",
-    "modified": "2022-08-22T08:18:51.182Z",
+    "modified": "2022-08-27T06:20:03.356Z",
     "headers": [],
     "params": [],
     "tests": []
@@ -47,7 +47,7 @@
     "method": "GET",
     "sortNum": 30000,
     "created": "2022-08-26T03:35:13.111Z",
-    "modified": "2022-08-26T07:35:10.958Z",
+    "modified": "2022-08-27T06:19:01.623Z",
     "headers": [
       {
         "name": "Authorization",
@@ -57,22 +57,49 @@
     "params": [],
     "auth": {
       "type": "bearer",
-      "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiODQwMTdiZTQtOTA4Mi00MzIzLTg1MTMtYTQ0NTA3ODVmNjIyIiwibmFtZSI6Imx1Y3kiLCJyb2xlIjoib3duZXIiLCJpc3MiOiJBdXRoZW50aWNhdG9yIiwiZXhwIjoxNjYxNDg2NzkyLCJuYmYiOjE2NjE0ODYxOTIsImlhdCI6MTY2MTQ4NjE5Mn0.rlI1oh26h_2NVgYdqDJqrRhHEEu8K8L4rHaBryk8cCE"
+      "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX3V1aWQiOiI4NDAxN2JlNC05MDgyLTQzMjMtODUxMy1hNDQ1MDc4NWY2MjIiLCJpc3MiOiJBdXRoZW50aWNhdG9yIiwiZXhwIjoxNjYxNTgxNDY5LCJuYmYiOjE2NjE1ODA4NjksImlhdCI6MTY2MTU4MDg2OX0.R6ZTVsdEb7qOprCR2ltKiXYFw-4jNxhAq7D2tDgpSD9"
     },
     "tests": []
   },
   {
     "_id": "3b98a9d8-c711-403b-8ae6-631e89eda617",
     "colId": "de1b9618-6398-451f-930e-95a9a29ad58f",
-    "containerId": "d2ad7f45-dbce-41ee-bf71-4b5bb43e47c3",
+    "containerId": "e7f4b28a-6b44-44ad-b050-c066dd475bb7",
     "name": "refresh token",
-    "url": "{{base_url}}/users/refresh-token",
+    "url": "{{base_url}}/auth/refresh-token",
     "method": "GET",
-    "sortNum": 40000,
+    "sortNum": 30000,
     "created": "2022-08-26T07:45:36.961Z",
-    "modified": "2022-08-26T08:27:56.576Z",
+    "modified": "2022-08-27T09:27:03.858Z",
+    "headers": [
+      {
+        "name": "X-ACCESS-TOKEN",
+        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX3V1aWQiOiI4NDAxN2JlNC05MDgyLTQzMjMtODUxMy1hNDQ1MDc4NWY2MjIiLCJpc3MiOiJBdXRoZW50aWNhdG9yIiwiZXhwIjoxNjYxNTg1MDIyLCJuYmYiOjE2NjE1ODQ0MjIsImlhdCI6MTY2MTU4NDQyMn0.REgX1G1smfyHxx809LQOsVIywUEtzv1yl0_2HYay0ac"
+      },
+      {
+        "name": "X-REFRESH-TOKEN",
+        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX3V1aWQiOiI4NDAxN2JlNC05MDgyLTQzMjMtODUxMy1hNDQ1MDc4NWY2MjIiLCJpc3MiOiJBdXRoZW50aWNhdG9yIiwiZXhwIjoxNjkzMTIwNDIyLCJuYmYiOjE2NjE1ODQ0MjIsImlhdCI6MTY2MTU4NDQyMn0.WbVda2GpFJddiqru2-oyMSRkjrdLs1BHMMlaRsJoePY"
+      }
+    ],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "fc9645c2-bdd1-41b4-ba07-83f3747d4390",
+    "colId": "de1b9618-6398-451f-930e-95a9a29ad58f",
+    "containerId": "e7f4b28a-6b44-44ad-b050-c066dd475bb7",
+    "name": "logout",
+    "url": "{{base_url}}/auth/logout",
+    "method": "GET",
+    "sortNum": 50000,
+    "created": "2022-08-27T07:29:09.719Z",
+    "modified": "2022-08-27T09:28:28.594Z",
     "headers": [],
     "params": [],
+    "auth": {
+      "type": "bearer",
+      "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX3V1aWQiOiI4NDAxN2JlNC05MDgyLTQzMjMtODUxMy1hNDQ1MDc4NWY2MjIiLCJpc3MiOiJBdXRoZW50aWNhdG9yIiwiZXhwIjoxNjYxNTkzMDIzLCJuYmYiOjE2NjE1OTI0MjMsImlhdCI6MTY2MTU5MjQyM30.z8U3TgclZwHBpVoIE3rB9YePTgc1PcabXrH_rqm5jBM"
+    },
     "tests": []
   }
 ]
